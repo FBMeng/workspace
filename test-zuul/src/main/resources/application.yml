@@ -1,0 +1,30 @@
+server:
+  port: 8760
+  
+spring:
+  application:
+    name:test-zuul
+    
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+      
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
+zuul:
+  routes:
+    user:
+      path: /user/**
+      serviceId: service-one
+    post:
+      path: /post/**
+      serviceId: service-two
+    comment:
+      path: /comment/**
+      serviceId: service-two
+    category:
+      path: /category/**
+      serviceId: service-two
