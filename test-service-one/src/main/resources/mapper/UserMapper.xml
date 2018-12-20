@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="person.bing.testserviceone.user.dao.java.UserMapper">
+	<resultMap type="person.bing.testserviceone.user.bean.User" id="userMap">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+		<result column="user_pwd" property="userPwd" jdbcType="VARCHAR"/>
+		<result column="create_date" property="createdDate" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	<select id="getUsers" parameterType="person.bing.testserviceone.user.bean.User" resultMap="userMap">
+		select * from user where 1=1
+		<if test="id!=null">
+			and id=#{id}
+		</if>
+	</select>
+	
+	<insert id="addUser" parameterType="person.bing.testserviceone.user.bean.User" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into user(user_name,user_pwd,create_date) values(#{userName},#{userPwd},#{createdDate})
+	</insert>
+	
+	<select id="isExist" parameterType="person.bing.testserviceone.user.bean.User" resultType="INTEGER">
+		select id from user where user_name=#{userName} and user_pwd=#{userPwd}
+	</select>
+</mapper>

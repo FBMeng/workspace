@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="person.bing.testservicetwo.post.dao.java.PostMapper">
+	<resultMap type="person.bing.testservicetwo.post.bean.PostModel" id="postMap">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="user_id" property="userId" jdbcType="INTEGER"/>
+		<result column="category_id" property="categoryId" jdbcType="INTEGER"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="text" property="text" jdbcType="BLOB"/>
+		<result column="create_date" property="createdDate" jdbcType="TIMESTAMP"/>
+	</resultMap>
+<!-- 	<select id="getUsers" resultMap="userMap">
+		select * from user;
+	</select>
+	 -->
+	<insert id="addPost" parameterType="person.bing.testservicetwo.post.bean.PostModel" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into post(user_id,category_id,title,text,create_date) values(#{userId},#{categoryId},#{title},#{text},#{createdDate})
+	</insert>
+	
+	<select id="getPosts" parameterType="person.bing.testservicetwo.post.bean.PostModel" resultMap="postMap">
+		select * from post where 1=1
+		<if test="userId!=null">
+			and user_id=#{userId}
+		</if>
+		<if test="categoryId!=null">
+			and category_id=#{categoryId}
+		</if>
+	</select>
+	
+	<select id="getPostInfo" parameterType="person.bing.testservicetwo.post.bean.PostModel" resultMap="postMap">
+		select * from post where 1=1
+		<if test="id!=null">
+			and id=#{id}
+		</if>
+	</select>
+</mapper>
